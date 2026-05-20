@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Alerts - CrowdSafe</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Leaflet.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">CrowdSafe 🚨</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="alerts.html" class="active">Live Alerts</a></li>
+                <li><a href="report.html">Report</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="header-controls">
+            <h1>Live Emergency Feed</h1>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <div class="filter-group">
+                    <select id="filterType" class="form-control">
+                        <option value="All">All Types</option>
+                        <option value="Accident">Accident</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Flood">Flood</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <button class="btn btn-outline" id="toggleViewBtn" onclick="toggleMapView()">🗺️ Map View</button>
+            </div>
+        </div>
+
+        <!-- Map View -->
+        <div id="map-view" style="display:none;">
+            <div id="alertsMap" class="alerts-map"></div>
+            <p class="map-hint">📍 Click a marker to see report details. 🔴 Red = High &nbsp; 🟠 Orange = Medium &nbsp; 🟢 Green = Low severity.</p>
+        </div>
+
+        <!-- Card View -->
+        <div id="card-view">
+            <div id="alerts-container" class="grid-container">
+                <!-- Alerts injected here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Location Map Modal -->
+    <div id="locationMapModal" class="loc-modal-overlay" style="display:none;">
+        <div class="loc-modal-content">
+            <div class="loc-modal-header">
+                <div class="loc-modal-header-info">
+                    <h3 id="locModal-title">📍 Location</h3>
+                    <span id="locModal-type"></span>
+                </div>
+                <button class="modal-close" onclick="closeLocationModal()">&times;</button>
+            </div>
+            <div id="locModalMap" class="loc-modal-map"></div>
+            <div class="loc-modal-footer">
+                <button class="btn-close-modal" onclick="closeLocationModal()">Close</button>
+                <a id="locModal-directions" href="#" target="_blank" class="btn-directions">🧭 Get Directions</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 CrowdSafe Project.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        let currentView = 'cards';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAlerts();
+            document.getElementById('filterType').addEventListener('change', () => {
+                renderAlerts();
+                if (currentView === 'map') renderMap();
+            });
+        });
+
+        function toggleMapView() {
+            const btn = document.getElementById('toggleViewBtn');
+            if (currentView === 'cards') {
+                currentView = 'map';
+                document.getElementById('card-view').style.display = 'none';
+                document.getElementById('map-view').style.display = 'block';
+                btn.textContent = '📋 Card View';
+                renderMap();
+            } else {
+                currentView = 'cards';
+                document.getElementById('map-view').style.display = 'none';
+                document.getElementById('card-view').style.display = 'block';
+                btn.textContent = '🗺️ Map View';
+            }
+        }
+    </script>
+</body>
+</html>

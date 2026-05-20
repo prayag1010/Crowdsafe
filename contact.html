@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - CrowdSafe</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar" id="mainNav">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">CrowdSafe 🚨</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="alerts.html">Live Alerts</a></li>
+                <li><a href="report.html">Report</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-hero">
+        <h1>✉️ Contact Us</h1>
+        <p>Have questions or feedback? We'd love to hear from you.</p>
+    </div>
+
+    <main class="container form-container">
+        <div class="form-wrapper" style="animation: card-in 0.4s ease forwards;">
+            <h2>Send a Message</h2>
+            <p class="subtitle">We typically respond within 24 hours.</p>
+
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="c-name">Your Name</label>
+                    <input type="text" id="c-name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="c-email">Email Address</label>
+                    <input type="email" id="c-email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="c-message">Message</label>
+                    <textarea id="c-message" rows="5" required placeholder="How can we help you?"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" style="padding: 14px;">
+                    ✉️ Send Message
+                </button>
+            </form>
+
+            <div id="contact-success" style="display:none; margin-top:20px; text-align:center;">
+                <div style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); border:1px solid #6ee7b7; padding: 20px; border-radius: var(--radius-lg);">
+                    <div style="font-size:2rem; margin-bottom:8px;">✅</div>
+                    <strong style="color: var(--success-dark);">Message sent successfully!</strong>
+                    <p style="color:#065f46; font-size:0.9rem; margin-top:4px;">We'll get back to you soon.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 CrowdSafe Project.</p>
+            <div class="footer-links">
+                <a href="about.html">About</a>
+                <a href="admin.html">Admin</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('contactForm');
+            const successMsg = document.getElementById('contact-success');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const contact = {
+                    id: Date.now(),
+                    name: document.getElementById('c-name').value.trim(),
+                    email: document.getElementById('c-email').value.trim(),
+                    message: document.getElementById('c-message').value.trim(),
+                    timestamp: new Date().toISOString(),
+                    read: false
+                };
+
+                const contacts = JSON.parse(localStorage.getItem('crowdsafe_contacts') || '[]');
+                contacts.unshift(contact);
+                localStorage.setItem('crowdsafe_contacts', JSON.stringify(contacts));
+
+                form.style.display = 'none';
+                successMsg.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

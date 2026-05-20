@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Emergency - CrowdSafe</title>
+    <meta name="description" content="Submit an emergency report to alert the campus community instantly.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar" id="mainNav">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">CrowdSafe 🚨</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="alerts.html">Live Alerts</a></li>
+                <li><a href="report.html" class="active">Report</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <div class="page-hero">
+        <h1>🚨 Report an Emergency</h1>
+        <p>Your report helps the community stay safe. Every second counts.</p>
+    </div>
+
+    <main class="container form-container">
+        <div class="form-wrapper" style="animation: card-in 0.4s ease forwards;">
+            <h2>Emergency Details</h2>
+            <p class="subtitle">Fill in the details below as accurately as possible.</p>
+
+            <form id="reportForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required placeholder="e.g. John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" required placeholder="e.g. 9876543210" maxlength="15" oninput="validatePhoneInline()">
+                    <span id="phone-error" class="field-error" style="display:none;">⚠️ Enter a valid 10-digit phone number.</span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="type">Emergency Type</label>
+                        <select id="type" required>
+                            <option value="Accident">🚗 Accident</option>
+                            <option value="Fire">🔥 Fire</option>
+                            <option value="Flood">🌊 Flood</option>
+                            <option value="Medical">🏥 Medical</option>
+                            <option value="Other">⚠️ Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="severity">Severity Level</label>
+                        <select id="severity" required>
+                            <option value="Low">🟢 Low</option>
+                            <option value="Medium">🟠 Medium</option>
+                            <option value="High">🔴 High</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <div class="location-input-group">
+                        <input type="text" id="location" required placeholder="e.g. Library, Building A">
+                        <button type="button" id="getLocationBtn" class="btn-location" onclick="fetchCurrentLocation()">📍 Use My Location</button>
+                    </div>
+                    <input type="hidden" id="report-lat" value="">
+                    <input type="hidden" id="report-lng" value="">
+                    <span id="location-status" class="field-hint"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" rows="4" required placeholder="Describe the situation in detail..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top: 8px; padding: 14px;">
+                    🚨 Submit Report
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 CrowdSafe Project.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('reportForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                submitReport();
+            });
+        });
+    </script>
+</body>
+</html>
