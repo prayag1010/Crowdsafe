@@ -3,7 +3,7 @@ Crowdsourced Emergency Alert System
 A real-time public safety platform that enables users to report, verify, and receive emergency alerts instantly
  based on location and incident severity.
 
-Live Demo🔗:-
+Live Demo🔗:-https://prayag1010.github.io/Crowdsafe/
 _________________________________________________________________________________________________________________
 
 Overview:-
